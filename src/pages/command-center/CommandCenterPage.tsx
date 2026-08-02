@@ -1,19 +1,20 @@
 export default function CommandCenterPage() {
   return (
-    <section className="flex h-full w-full items-center justify-center overflow-hidden px-8">
-      <div className="text-center">
-        <p className="mb-5 text-xs font-semibold uppercase tracking-[0.45em] text-muted-foreground">
+    <div className="flex h-full items-center justify-center p-8">
+      <div className="max-w-3xl text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
           AeroPulse
         </p>
 
-        <h1 className="max-w-4xl text-5xl font-bold tracking-tight">
+        <h1 className="mt-4 text-5xl font-bold tracking-tight">
           Airport Operations Control Center
         </h1>
 
         <p className="mt-6 text-lg text-muted-foreground">
-          Airport systems initializing...
+          Mission Control initializing. Operational modules will become
+          available as airport systems come online.
         </p>
       </div>
-    </section>
+    </div>
   );
 }
