@@ -49,10 +49,7 @@ export interface FlightBagLoad {
   totalWeightKg: number;
 }
 
-/**
- * Flights with the heaviest baggage load — useful for ramp crew and
- * ground-handling resource planning ahead of departure.
- */
+
 export function getTopBaggageFlights(
   bags: Bag[],
   limit = 5

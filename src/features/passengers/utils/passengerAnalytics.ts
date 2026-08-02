@@ -33,11 +33,7 @@ export function getSpecialAssistanceCount(passengers: Passenger[]) {
   ).length;
 }
 
-/**
- * A passenger whose buffer_time_hours (gap between check-in and their
- * flight's departure cutoff) is under 30 minutes is flagged as a tight
- * connection — useful for surfacing who ops should keep an eye on.
- */
+
 export function getTightConnectionCount(passengers: Passenger[]) {
   return passengers.filter((p) => Number(p.buffer_time_hours) < 0.5).length;
 }

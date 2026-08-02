@@ -2,22 +2,6 @@ import type { SecurityScreening } from "../../../types/security.types";
 import type { Passenger } from "../../../types/passenger.types";
 import type { Flight } from "../../../types/flight.types";
 
-/**
- * security_screening.csv carries no flight_id, and its pnr_code /
- * passport_masked values don't reliably correlate with passengers.csv —
- * screening records appear to have been generated independently of the
- * passenger roster (a data-quality reality of this dataset, not a bug in
- * the join logic). We still attempt the lookup via pnr_code, the same
- * pattern every other module uses, so any real matches surface naturally.
- * Unmatched records are left unlinked rather than fabricated.
- *
- * The dataset also records zero screening incidents: result, secondary
- * screening, confiscation, watchlist and pat-down fields are constant
- * across all rows. Operational KPIs below lean on the fields that do
- * genuinely vary — checkpoint number, staff assignment, and timestamps —
- * instead of inventing variance that isn't in the source data.
- */
-
 export interface ScreeningWithContext extends SecurityScreening {
   passenger: Passenger | null;
   flight: Flight | null;
