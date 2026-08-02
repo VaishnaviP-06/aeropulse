@@ -8,6 +8,7 @@ import {
   Gauge,
 } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
+import FlightAnalytics from "../../features/components/FlightAnalytics";
 
 const modules = [
   { label: "Flights", status: "success" as const, note: "Nominal" },
@@ -193,6 +194,13 @@ export default function CommandCenterPage() {
         </div>
 
 
+      </div>
+
+
+      {/* Flight Status Overview (analytics) */}
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <FlightAnalytics />
       </div>
 
     </div>

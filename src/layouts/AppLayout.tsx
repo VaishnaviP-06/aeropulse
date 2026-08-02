@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import AmbientGlow from "../components/ui/AmbientGlow";
 import Sidebar from "./components/Sidebar";
 import TopNavigation from "./components/TopNavigation";
+import PageTransition from "../components/ui/PageTransition";
 
 export default function AppLayout() {
   return (
@@ -30,7 +31,6 @@ export default function AppLayout() {
 
         <div className="flex min-h-screen flex-1 flex-col">
           <TopNavigation />
-
           <main
             className="
               flex-1
@@ -38,7 +38,9 @@ export default function AppLayout() {
               p-6
             "
           >
-            <Outlet />
+            <PageTransition>
+              <Outlet />
+            </PageTransition>
           </main>
         </div>
       </div>
