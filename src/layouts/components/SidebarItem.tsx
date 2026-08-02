@@ -1,28 +1,64 @@
-import clsx from "clsx";
 import { NavLink } from "react-router-dom";
-import type { NavigationItem } from "../../types/navigation";
+import type { LucideIcon } from "lucide-react";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+
 
 interface Props {
-  item: NavigationItem;
+  label: string;
+  icon: LucideIcon;
+  path: string;
+  collapsed?: boolean;
 }
 
-export default function SidebarItem({ item }: Props) {
-  const Icon = item.icon;
+
+export default function SidebarItem({
+  label,
+  icon: Icon,
+  path,
+  collapsed = false,
+}: Props) {
 
   return (
     <NavLink
-      to={item.href}
+      to={path}
+      title={collapsed ? label : undefined}
       className={({ isActive }) =>
         clsx(
-          "group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200",
+          "group relative flex items-center rounded-lg px-3 py-2 text-sm transition-colors",
+
+          "hover:bg-muted",
+
           isActive
-            ? "bg-primary text-primary-foreground"
-            : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            ? "bg-primary/10 text-foreground before:absolute before:left-0 before:top-1/2 before:h-5 before:w-[3px] before:-translate-y-1/2 before:rounded-full before:bg-primary before:shadow-[0_0_10px_1px_oklch(0.78_0.12_220_/_70%)]"
+            : "text-muted-foreground",
+
+          collapsed
+            ? "justify-center"
+            : "gap-3"
         )
       }
     >
-      <Icon size={18} />
-      <span className="text-sm font-medium">{item.label}</span>
+
+      <Icon
+        size={18}
+        className="shrink-0"
+      />
+
+
+      {!collapsed && (
+        <motion.span
+          initial={{ opacity:0 }}
+          animate={{ opacity:1 }}
+          transition={{ duration:0.15 }}
+          className="
+            whitespace-nowrap
+          "
+        >
+          {label}
+        </motion.span>
+      )}
+
     </NavLink>
   );
 }

@@ -1,19 +1,23 @@
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import type { ReactNode } from "react";
+import { useEffect } from "react";
+import { useThemeStore } from "../store/theme.store";
 
-interface Props {
-  children: ReactNode;
-}
+export default function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
 
-export default function ThemeProvider({ children }: Props) {
-  return (
-    <NextThemesProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      {children}
-    </NextThemesProvider>
+  const theme = useThemeStore(
+    (state)=>state.theme
   );
+
+  useEffect(()=>{
+    document.documentElement.classList.toggle(
+      "dark",
+      theme==="dark"
+    );
+  },[theme]);
+
+
+  return children;
 }
