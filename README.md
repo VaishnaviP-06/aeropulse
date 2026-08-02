@@ -1,4 +1,4 @@
-<div align="center">
+<img width="1905" height="964" alt="Cinematic Intro" src="https://github.com/user-attachments/assets/9da04205-f678-44f4-9cad-fa74f57a12a1" /><div align="center">
 
 # ✈️ AeroPulse
 
@@ -22,7 +22,7 @@ Built for **Frontend Wars 2026** — focused on creating a next-generation Airpo
 
 <br/>
 
-[Live Demo](#)
+[Live Demo](https://aeropulse-khaki.vercel.app/)
 
 </div>
 
@@ -252,17 +252,17 @@ Includes:
 
 ## Cinematic Intro
 
-<img src="./src/assets/intro.png" alt="AeroPulse Intro"/>
+<img width="1905" height="964" alt="Cinematic Intro" src="https://github.com/user-attachments/assets/c168674b-0688-4372-ac68-93fe82fde9de" />
 
 
 ## Command Center Dashboard
 
-<img src="./src/assets/dashboard.png" alt="Command Center"/>
+<img width="1919" height="910" alt="Command Center" src="https://github.com/user-attachments/assets/6cd900a1-af35-4417-b347-a9f3989614f6" />
 
 
-## Analytics Dashboard
-
-<img src="./src/assets/analytics.png" alt="Analytics Dashboard"/>
+## Maintenance Dashboard
+<img width="1919" height="910" alt="Maintenance_light_bg" src="https://github.com/user-attachments/assets/c8e89489-97a4-4a73-a106-e564612dc261" />
+<img width="1919" height="900" alt="Maintenance_Dark_bg" src="https://github.com/user-attachments/assets/e8ecd036-d6b8-48c2-b909-5dd01501c0f5" />
 
 
 ---
