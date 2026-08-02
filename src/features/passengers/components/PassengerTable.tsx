@@ -1,36 +1,30 @@
 import { Search } from "lucide-react";
-import {
-  useFlightFilters,
-  statusFilters,
-  sortOptions,
-  type StatusFilter,
-  type SortKey,
-} from "../hooks/useFlightFilters";
-import FlightRow from "./FlightRow";
+import { usePassengerOperations, cabinFilters } from "../hooks/usePassengerOperations";
+import PassengerRow from "./PassengerRow";
 
 const columns = [
+  "PNR",
+  "Passenger",
   "Flight",
-  "Airline",
   "Route",
-  "Aircraft",
+  "Seat",
+  "Class",
   "Gate",
-  "Status",
-  "Delay",
-  "Risk",
+  "Connection",
 ];
 
-export default function FlightTable() {
+export default function PassengerTable() {
   const {
-    flights,
+    passengers,
     total,
     loading,
     search,
     setSearch,
-    status,
-    setStatus,
-    sortKey,
-    setSortKey,
-  } = useFlightFilters();
+    cabin,
+    setCabin,
+    tightConnectionsOnly,
+    setTightConnectionsOnly,
+  } = usePassengerOperations();
 
   return (
     <div className="glass rounded-xl overflow-hidden">
@@ -44,19 +38,19 @@ export default function FlightTable() {
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search flight ID, airline, route, gate..."
+            placeholder="Search PNR, name, flight, nationality..."
             className="w-full rounded-lg border border-border bg-card/40 py-2 pl-9 pr-3 text-sm outline-none placeholder:text-muted-foreground focus:border-primary/50"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <div className="flex flex-wrap gap-1.5">
-            {statusFilters.map((option) => (
+            {cabinFilters.map((option) => (
               <button
                 key={option}
-                onClick={() => setStatus(option as StatusFilter)}
+                onClick={() => setCabin(option)}
                 className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                  status === option
+                  cabin === option
                     ? "border-primary/50 bg-primary/10 text-primary"
                     : "border-border text-muted-foreground hover:border-primary/30 hover:text-primary"
                 }`}
@@ -66,17 +60,16 @@ export default function FlightTable() {
             ))}
           </div>
 
-          <select
-            value={sortKey}
-            onChange={(event) => setSortKey(event.target.value as SortKey)}
-            className="rounded-lg border border-border bg-card/40 px-3 py-2 text-xs text-muted-foreground outline-none focus:border-primary/50"
+          <button
+            onClick={() => setTightConnectionsOnly((value) => !value)}
+            className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+              tightConnectionsOnly
+                ? "border-status-critical/50 bg-status-critical/10 text-status-critical"
+                : "border-border text-muted-foreground hover:border-status-critical/30 hover:text-status-critical"
+            }`}
           >
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                Sort: {option.label}
-              </option>
-            ))}
-          </select>
+            Tight connections only
+          </button>
         </div>
       </div>
 
@@ -93,28 +86,32 @@ export default function FlightTable() {
           </thead>
 
           <tbody>
-            {flights.map((flight, index) => (
-              <FlightRow key={flight.flight_id} flight={flight} index={index} />
+            {passengers.map((passenger, index) => (
+              <PassengerRow
+                key={passenger.pnr_code}
+                passenger={passenger}
+                index={index}
+              />
             ))}
           </tbody>
         </table>
 
-        {!loading && flights.length === 0 && (
+        {!loading && passengers.length === 0 && (
           <div className="p-10 text-center text-sm text-muted-foreground">
-            No flights match your filters.
+            No passengers match your filters.
           </div>
         )}
 
         {loading && (
           <div className="p-10 text-center text-sm text-muted-foreground">
-            Loading flight operations…
+            Loading passengers…
           </div>
         )}
       </div>
 
       <div className="flex items-center justify-between border-t border-border px-4 py-2.5 text-xs text-muted-foreground">
         <span>
-          Showing {flights.length} of {total} flights
+          Showing {passengers.length} of {total} passengers
         </span>
       </div>
     </div>
