@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 import FlightAnalytics from "../../features/components/FlightAnalytics";
+import WeatherConditions from "../../features/components/WeatherConditions";
 
 const modules = [
   { label: "Flights", status: "success" as const, note: "Nominal" },
@@ -201,6 +202,10 @@ export default function CommandCenterPage() {
 
       <div className="grid gap-4 lg:grid-cols-3">
         <FlightAnalytics />
+
+        <div className="lg:col-span-2">
+          <WeatherConditions />
+        </div>
       </div>
 
     </div>

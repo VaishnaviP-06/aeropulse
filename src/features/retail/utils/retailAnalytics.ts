@@ -5,12 +5,6 @@ export interface TransactionWithFlight extends RetailTransaction {
   flight: Flight | null;
 }
 
-/**
- * flight_id is the only verified cross-dataset relationship for retail
- * transactions (100% of the 942 distinct flight IDs in this dataset exist
- * in flights.csv). passport_masked and operator_id are intentionally not
- * joined — see retail.types.ts for why.
- */
 export function joinRetailWithFlight(
   transactions: RetailTransaction[],
   flights: Flight[]

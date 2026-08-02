@@ -3,6 +3,7 @@ import StatusBadge from "../../components/ui/StatusBadge";
 import { useGateOperations } from "../../features/gates/hooks/useGateOperations";
 import GateCard from "../../features/gates/components/GateCard";
 import GateActivityFeed from "../../features/gates/components/GateActivityFeed";
+import GateUtilization from "../../features/components/GateUtilization";
 
 export default function GatesPage() {
   const {
@@ -96,6 +97,10 @@ export default function GatesPage() {
 
         <GateActivityFeed activity={activity} />
       </div>
+
+      {/* Gate utilization analytics */}
+
+      <GateUtilization />
     </div>
   );
 }

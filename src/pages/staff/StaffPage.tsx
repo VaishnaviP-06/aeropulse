@@ -2,6 +2,7 @@ import { Users, CalendarDays, Clock, Languages } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 import StaffTable from "../../features/staff/components/StaffTable";
 import ShiftActivityFeed from "../../features/staff/components/ShiftActivityFeed";
+import StaffCoverage from "../../features/components/StaffCoverage";
 import { useStaffOperations } from "../../features/staff/hooks/useStaffOperations";
 
 export default function StaffPage() {
@@ -69,6 +70,10 @@ export default function StaffPage() {
 
         <ShiftActivityFeed shifts={recentShifts} />
       </div>
+
+      {/* Staff coverage analytics */}
+
+      <StaffCoverage />
     </div>
   );
 }

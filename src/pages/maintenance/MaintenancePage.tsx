@@ -2,6 +2,7 @@ import { Wrench, Plane, Link2, AlertTriangle } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 import MaintenanceTable from "../../features/maintenance/components/MaintenanceTable";
 import MaintenanceActivityFeed from "../../features/maintenance/components/MaintenanceActivityFeed";
+import MaintenanceVolume from "../../features/components/MaintenanceVolume";
 import { useMaintenanceOperations } from "../../features/maintenance/hooks/useMaintenanceOperations";
 
 export default function MaintenancePage() {
@@ -69,6 +70,10 @@ export default function MaintenancePage() {
 
         <MaintenanceActivityFeed workOrders={recentWorkOrders} />
       </div>
+
+      {/* Maintenance volume analytics */}
+
+      <MaintenanceVolume />
     </div>
   );
 }

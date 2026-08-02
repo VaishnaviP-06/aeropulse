@@ -2,6 +2,7 @@ import { ShieldCheck, ScanLine, UserCheck, Users } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 import SecurityTable from "../../features/security/components/SecurityTable";
 import CheckpointLoadPanel from "../../features/security/components/CheckpointLoadPanel";
+import CheckpointFlow from "../../features/components/CheckpointFlow";
 import { useSecurityOperations } from "../../features/security/hooks/useSecurityOperations";
 
 export default function SecurityPage() {
@@ -69,6 +70,10 @@ export default function SecurityPage() {
 
         <CheckpointLoadPanel checkpoints={checkpointLoad} />
       </div>
+
+      {/* Checkpoint flow analytics */}
+
+      <CheckpointFlow />
     </div>
   );
 }

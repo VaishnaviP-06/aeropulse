@@ -2,6 +2,7 @@ import { ShoppingBag, Receipt, Wallet, Plane } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 import RetailTable from "../../features/retail/components/RetailTable";
 import RetailRevenuePanel from "../../features/retail/components/RetailRevenuePanel";
+import RevenueTrend from "../../features/components/RevenueTrend";
 import { useRetailOperations } from "../../features/retail/hooks/useRetailOperations";
 
 export default function RetailPage() {
@@ -76,6 +77,10 @@ export default function RetailPage() {
           datasetProfile={datasetProfile}
         />
       </div>
+
+      {/* Revenue analytics */}
+
+      <RevenueTrend />
     </div>
   );
 }

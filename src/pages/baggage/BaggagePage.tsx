@@ -2,6 +2,7 @@ import { Luggage, Weight, Scale, ScanEye } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 import BaggageTable from "../../features/baggage/components/BaggageTable";
 import TopBaggageFlights from "../../features/baggage/components/TopBaggageFlights";
+import BaggageWeightProfile from "../../features/components/BaggageWeightProfile";
 import { useBaggageOperations } from "../../features/baggage/hooks/useBaggageOperations";
 
 export default function BaggagePage() {
@@ -69,6 +70,10 @@ export default function BaggagePage() {
 
         <TopBaggageFlights flights={topBaggageFlights} />
       </div>
+
+      {/* Baggage weight analytics */}
+
+      <BaggageWeightProfile />
     </div>
   );
 }

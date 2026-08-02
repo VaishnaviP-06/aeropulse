@@ -1,19 +1,6 @@
 import type { MaintenanceLog } from "../../../types/maintenance.types";
 import type { Flight } from "../../../types/flight.types";
 
-/**
- * maintenance_logs.csv covers a single tail number (VT-ABC) across 400
- * work-order line items. flight_id matches flights.csv 1:1, so every log
- * can be reliably linked to a route for operational context — unlike the
- * staff ids, which don't correlate with staff_shifts.csv and are kept as
- * plain reference text rather than a fabricated join.
- *
- * Every descriptive field in this dataset (issue, component, priority,
- * grounded, recurring) is constant, so it records one recurring
- * inspection scenario rather than distinct incidents. KPIs below lean on
- * what genuinely varies: work order volume, linked flights, and staff
- * activity over time.
- */
 
 export interface MaintenanceLogWithContext extends MaintenanceLog {
   flight: Flight | null;
