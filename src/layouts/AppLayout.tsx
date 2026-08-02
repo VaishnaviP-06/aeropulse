@@ -1,14 +1,9 @@
+import { Outlet } from "react-router-dom";
 import AmbientGlow from "../components/ui/AmbientGlow";
 import Sidebar from "./components/Sidebar";
 import TopNavigation from "./components/TopNavigation";
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export default function AppLayout({
-  children,
-}: Props) {
+export default function AppLayout() {
   return (
     <div
       className="
@@ -23,8 +18,8 @@ export default function AppLayout({
           pointer-events-none
           absolute
           inset-0
-          bg-[radial-gradient(circle_at_top_left,rgba(107,200,255,0.10),transparent_35%)]
-          dark:bg-[radial-gradient(circle_at_top_left,rgba(107,200,255,0.14),transparent_35%)]
+          bg-[radial-gradient(circle_at_top_left,rgba(107,200,255,0.12),transparent_35%)]
+          dark:bg-[radial-gradient(circle_at_top_left,rgba(107,200,255,0.18),transparent_35%)]
         "
       />
 
@@ -43,7 +38,7 @@ export default function AppLayout({
               p-6
             "
           >
-            {children}
+            <Outlet />
           </main>
         </div>
       </div>

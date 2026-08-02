@@ -1,11 +1,13 @@
 import StatusBadge from "../../components/ui/StatusBadge";
-
-const kpis = [
-  { label: "Flights Today", value: "—", hint: "on schedule" },
-  { label: "Active Gates", value: "—", hint: "in use" },
-  { label: "Avg. Delay", value: "—", hint: "minutes" },
-  { label: "Open Alerts", value: "—", hint: "needs attention" },
-];
+import { useFlightMetrics } from "../../features/flights/hooks/useFlightMetrics";
+import {
+  Plane,
+  Clock,
+  Activity,
+  AlertTriangle,
+  Gauge,
+} from "lucide-react";
+import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 
 const modules = [
   { label: "Flights", status: "success" as const, note: "Nominal" },
@@ -17,78 +19,182 @@ const modules = [
 ];
 
 export default function CommandCenterPage() {
+  const metrics = useFlightMetrics();
+
+  const kpis = [
+    {
+      label: "Flights Today",
+      value: metrics.totalFlights,
+      description: "Scheduled operations",
+      icon: Plane,
+    },
+    {
+      label: "Delayed Flights",
+      value: metrics.delayedFlights,
+      description: "Requires attention",
+      icon: Clock,
+    },
+    {
+      label: "Active Flights",
+      value: metrics.activeFlights,
+      description: "Currently operating",
+      icon: Activity,
+    },
+    {
+      label: "Risk Flights",
+      value: metrics.riskFlights,
+      description: "Operational monitoring",
+      icon: AlertTriangle,
+    },
+    {
+      label: "Load Factor",
+      value: `${metrics.averageLoadFactor}%`,
+      description: "Passenger utilization",
+      icon: Gauge,
+    },
+  ];
+
   return (
     <div className="flex flex-col gap-6">
+
       <div className="flex flex-wrap items-center justify-between gap-4">
+
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-muted-foreground">
             AeroPulse
           </p>
+
           <h1 className="mt-2 text-3xl font-bold tracking-tight">
             Airport Operations Overview
           </h1>
+
+          <p className="mt-2 text-sm text-muted-foreground">
+            Live operational intelligence powered by airport datasets
+          </p>
         </div>
 
-        <StatusBadge label="All systems operational" variant="success" />
+        <StatusBadge
+          label="All systems operational"
+          variant="success"
+        />
+
       </div>
 
-      {/* KPI strip */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {kpis.map((kpi) => (
-          <div
+
+      {/* Flight Intelligence */}
+
+      <div className="
+        grid
+        grid-cols-2
+        gap-4
+        lg:grid-cols-5
+      ">
+
+        {kpis.map((kpi)=>(
+          <FlightMetricCard
             key={kpi.label}
-            className="glass rounded-xl p-5"
-          >
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
-              {kpi.label}
-            </p>
-            <p className="mt-2 font-mono text-3xl font-semibold tracking-tight text-gradient">
-              {kpi.value}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">{kpi.hint}</p>
-          </div>
+            {...kpi}
+          />
         ))}
+
       </div>
+
+
 
       <div className="grid gap-4 lg:grid-cols-3">
-        {/* Module status grid */}
+
+
+        {/* Operational Systems */}
+
         <div className="glass rounded-xl p-5 lg:col-span-2">
-          <h3 className="text-sm font-semibold tracking-tight">
-            Module Status
+
+          <h3 className="text-sm font-semibold">
+            Operational Systems
           </h3>
+
           <p className="text-xs text-muted-foreground">
-            Live health across operational systems
+            Live health across airport departments
           </p>
 
-          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {modules.map((m) => (
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+
+            {modules.map((module)=>(
+
               <div
-                key={m.label}
-                className="flex items-center justify-between rounded-lg border border-border bg-card/60 px-4 py-3"
+                key={module.label}
+                className="
+                  flex
+                  items-center
+                  justify-between
+                  rounded-lg
+                  border
+                  border-border
+                  bg-card/40
+                  px-4
+                  py-3
+                "
               >
-                <span className="text-sm font-medium">{m.label}</span>
-                <StatusBadge label={m.note} variant={m.status} />
+
+                <span className="text-sm font-medium">
+                  {module.label}
+                </span>
+
+
+                <StatusBadge
+                  label={module.note}
+                  variant={module.status}
+                />
+
               </div>
+
             ))}
+
           </div>
+
         </div>
 
-        {/* Alert / event feed */}
+
+
+        {/* Event Feed */}
+
         <div className="glass rounded-xl p-5">
-          <h3 className="text-sm font-semibold tracking-tight">
+
+          <h3 className="text-sm font-semibold">
             Event Feed
           </h3>
+
           <p className="text-xs text-muted-foreground">
-            Simulated real-time operational events
+            Simulated real-time airport events
           </p>
 
-          <div className="mt-4 flex h-64 items-center justify-center rounded-lg border border-dashed border-border text-center text-xs text-muted-foreground">
-            Waiting for dataset connection —
+
+          <div
+            className="
+              mt-4
+              flex
+              h-64
+              items-center
+              justify-center
+              rounded-lg
+              border
+              border-dashed
+              border-border
+              text-center
+              text-xs
+              text-muted-foreground
+            "
+          >
+            Monitoring flight,
             <br />
-            wire this to flights.csv / gate_events.csv
+            gate and security streams
           </div>
+
         </div>
+
+
       </div>
+
     </div>
   );
 }

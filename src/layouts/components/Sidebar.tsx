@@ -13,7 +13,7 @@ import {
   Clock3,
   PanelLeft,
 } from "lucide-react";
-import clsx from "clsx";
+
 
 import SidebarItem from "./SidebarItem";
 import OperationalBadge from "../../components/ui/OperationalBadge";
