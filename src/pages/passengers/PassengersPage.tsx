@@ -1,6 +1,7 @@
 import { Users, Briefcase, Accessibility, AlarmClockOff } from "lucide-react";
 import FlightMetricCard from "../../features/flights/components/FlightMetricCard";
 import PassengerTable from "../../features/passengers/components/PassengerTable";
+import PassengerFlow from "../../features/components/PassengerFlow";
 import { usePassengerOperations } from "../../features/passengers/hooks/usePassengerOperations";
 
 export default function PassengersPage() {
@@ -61,6 +62,10 @@ export default function PassengersPage() {
       </div>
 
       <PassengerTable />
+
+      {/* Passenger flow analytics */}
+
+      <PassengerFlow />
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import FlightTable from "../../features/flights/components/FlightTable";
+import HourlyTraffic from "../../features/components/HourlyTraffic";
+import DelayChart from "../../features/components/DelayChart";
 
 export default function FlightsPage() {
   return (
@@ -18,6 +20,13 @@ export default function FlightsPage() {
       </div>
 
       <FlightTable />
+
+      {/* Traffic & delay analytics */}
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <HourlyTraffic />
+        <DelayChart />
+      </div>
     </div>
   );
 }

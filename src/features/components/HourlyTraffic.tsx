@@ -7,7 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Users } from "lucide-react";
+import { Radar } from "lucide-react";
 import ChartCard from "./charts/ChartCard";
 import ChartTooltip from "./charts/ChartTooltip";
 import {
@@ -16,22 +16,22 @@ import {
   CHART_AXIS_STYLE,
   CHART_CURSOR_PROPS,
 } from "./charts/chartTheme";
-import { usePassengerFlowOverview } from "../data/analyticsData";
-import type { PassengerFlowPoint } from "../types/analytics.types";
+import { useHourlyTrafficOverview } from "../data/analyticsData";
+import type { HourlyTrafficPoint } from "../types/analytics.types";
 
-interface FlowTooltipPayloadItem {
+interface TrafficTooltipPayloadItem {
   dataKey: string;
   value: number;
-  payload: PassengerFlowPoint;
+  payload: HourlyTrafficPoint;
 }
 
-function PassengerFlowTooltip({
+function HourlyTrafficTooltip({
   active,
   payload,
   label,
 }: {
   active?: boolean;
-  payload?: FlowTooltipPayloadItem[];
+  payload?: TrafficTooltipPayloadItem[];
   label?: string;
 }) {
   return (
@@ -40,14 +40,14 @@ function PassengerFlowTooltip({
       title={label}
       rows={[
         {
-          label: "Pier B1-B25",
-          value: payload?.find((p) => p.dataKey === "pierA")?.value ?? 0,
+          label: "Arrivals",
+          value: payload?.find((p) => p.dataKey === "arrivals")?.value ?? 0,
           color: CHART_COLORS.chart1,
         },
         {
-          label: "Pier B26-B50",
-          value: payload?.find((p) => p.dataKey === "pierB")?.value ?? 0,
-          color: CHART_COLORS.chart5,
+          label: "Departures",
+          value: payload?.find((p) => p.dataKey === "departures")?.value ?? 0,
+          color: CHART_COLORS.chart2,
         },
       ]}
     />
@@ -55,29 +55,30 @@ function PassengerFlowTooltip({
 }
 
 /**
- * 4. Passenger Flow -- area chart
- * Hourly passenger check-in movement, compared across Terminal 3's two
- * gate piers (B1-B25 vs B26-B50) since the source dataset models a single
- * terminal.
+ * 2. Hourly Flight Traffic -- area chart
+ * Arrivals vs departures across a 24-hour window, derived from
+ * scheduled_departure / scheduled_arrival in flights.csv.
  */
-export default function PassengerFlow() {
-  const { points, peakHourLabel, peakTotal, totalPierA, totalPierB } =
-    usePassengerFlowOverview();
+export default function HourlyTraffic() {
+  const { points, peakHourLabel, peakTotal, totalArrivals, totalDepartures } =
+    useHourlyTrafficOverview();
 
   return (
     <ChartCard
-      eyebrow="Passenger Intelligence"
-      title="Passenger Flow"
-      subtitle="Hourly check-in movement, Terminal 3 · Pier B1-25 vs B26-50"
-      icon={Users}
+      eyebrow="Flight Intelligence"
+      title="Hourly Flight Traffic"
+      subtitle="Arrivals vs departures across a 24-hour window"
+      icon={Radar}
       action={
-        <div className="text-right">
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-            Peak Hour
-          </p>
-          <p className="text-sm font-semibold text-gradient">
-            {peakHourLabel} · {peakTotal}
-          </p>
+        <div className="flex items-center gap-4 text-right">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+              Peak Hour
+            </p>
+            <p className="text-sm font-semibold text-gradient">
+              {peakHourLabel} · {peakTotal}
+            </p>
+          </div>
         </div>
       }
     >
@@ -87,14 +88,14 @@ export default function PassengerFlow() {
             className="h-2 w-2 rounded-full"
             style={{ backgroundColor: CHART_COLORS.chart1 }}
           />
-          Pier B1-B25 ({totalPierA.toLocaleString()})
+          Arrivals ({totalArrivals.toLocaleString()})
         </span>
         <span className="flex items-center gap-1.5">
           <span
             className="h-2 w-2 rounded-full"
-            style={{ backgroundColor: CHART_COLORS.chart5 }}
+            style={{ backgroundColor: CHART_COLORS.chart2 }}
           />
-          Pier B26-B50 ({totalPierB.toLocaleString()})
+          Departures ({totalDepartures.toLocaleString()})
         </span>
       </div>
 
@@ -105,7 +106,7 @@ export default function PassengerFlow() {
             margin={{ top: 8, right: 8, left: -18, bottom: 0 }}
           >
             <defs>
-              <linearGradient id="pierAFill" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="arrivalsFill" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="0%"
                   stopColor={CHART_COLORS.chart1}
@@ -117,15 +118,15 @@ export default function PassengerFlow() {
                   stopOpacity={0}
                 />
               </linearGradient>
-              <linearGradient id="pierBFill" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id="departuresFill" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="0%"
-                  stopColor={CHART_COLORS.chart5}
+                  stopColor={CHART_COLORS.chart2}
                   stopOpacity={0.35}
                 />
                 <stop
                   offset="100%"
-                  stopColor={CHART_COLORS.chart5}
+                  stopColor={CHART_COLORS.chart2}
                   stopOpacity={0}
                 />
               </linearGradient>
@@ -149,28 +150,26 @@ export default function PassengerFlow() {
             />
 
             <Tooltip
-              content={<PassengerFlowTooltip />}
+              content={<HourlyTrafficTooltip />}
               cursor={CHART_CURSOR_PROPS}
               wrapperStyle={{ outline: "none" }}
             />
 
             <Area
               type="monotone"
-              dataKey="pierA"
-              stackId="flow"
+              dataKey="arrivals"
               stroke={CHART_COLORS.chart1}
               strokeWidth={2}
-              fill="url(#pierAFill)"
+              fill="url(#arrivalsFill)"
               animationDuration={900}
             />
 
             <Area
               type="monotone"
-              dataKey="pierB"
-              stackId="flow"
-              stroke={CHART_COLORS.chart5}
+              dataKey="departures"
+              stroke={CHART_COLORS.chart2}
               strokeWidth={2}
-              fill="url(#pierBFill)"
+              fill="url(#departuresFill)"
               animationDuration={900}
             />
           </AreaChart>

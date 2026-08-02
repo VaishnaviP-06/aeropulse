@@ -80,9 +80,9 @@ export default function FlightTable() {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="max-h-[420px] overflow-y-auto overflow-x-auto">
         <table className="w-full border-collapse text-left">
-          <thead>
+          <thead className="sticky top-0 z-10 bg-card">
             <tr className="border-b border-border text-xs uppercase tracking-wider text-muted-foreground">
               {columns.map((column) => (
                 <th key={column} className="px-4 py-3 font-medium">

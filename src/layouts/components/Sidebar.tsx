@@ -211,7 +211,7 @@ export default function Sidebar() {
         )}
       </div>
 
-      <nav className="flex-1 space-y-1 px-3">
+      <nav className="flex-1 space-y-2 px-3">
         {navigationItems.map((item) => (
           <SidebarItem
             key={item.label}
